@@ -10,13 +10,16 @@ plugins {
     id 'application'
 }
 
-
 repositories {
     mavenCentral()
 }
 
 group = 'hexlet.code'
 version = '1.0-SNAPSHOT'
+
+compileJava {
+    options.release = 17
+}
 
 application {
     mainClass = 'hexlet.code.App'
