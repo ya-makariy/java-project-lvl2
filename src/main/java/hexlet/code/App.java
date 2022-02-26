@@ -9,17 +9,16 @@ import picocli.CommandLine.Parameters;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import hexlet.code.Differ;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "app 1.0",
         description = "Compares two configuration files and shows a difference.")
-public class App implements Callable {
+public final class App implements Callable {
 
     @Parameters(index = "0", description = "path to first file")
-    String filepath1;
+    private String filepath1;
 
     @Parameters(index = "1", description = "path to second file")
-    String filepath2;
+    private String filepath2;
 
     @Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
     private String format = "stylish";

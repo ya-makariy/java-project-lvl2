@@ -10,19 +10,19 @@ import java.util.TreeMap;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-public class Differ{
+public class Differ {
 
     public static String fileToString(String filepath) throws IOException {
         Path filename = Path.of(filepath);
         return Files.readString(filename);
     }
 
-    public static Map getData (String content) throws Exception {
+    public static Map getData(String content) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(content, Map.class);
     }
 
-    public static String getStylish (Map differdata) throws JsonProcessingException {
+    public static String getStylish(Map differdata) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(differdata)
                 .replaceFirst("\\{", "\\{\n  ")
@@ -34,12 +34,12 @@ public class Differ{
 
     public static String generate(Map datafile1, Map datafile2) throws JsonProcessingException {
         //в другой метод
-        TreeMap fullData = new TreeMap<>();
+        TreeMap<String, Object> fullData = new TreeMap<>();
         fullData.putAll(datafile1);
         fullData.putAll(datafile2);
         //return fullData.toString();
 
-        Map<String, Object> datadata = new LinkedHashMap(fullData);
+        LinkedHashMap<String, Object> datadata = new LinkedHashMap(fullData);
 
         //sorting
         Map<String, Object>  newdata = new LinkedHashMap();
