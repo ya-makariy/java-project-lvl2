@@ -1,81 +1,18 @@
 package hexlet.code;
 
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Option;
-import picocli.CommandLine.Parameters;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.Callable;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-@Command(name = "gendiff", mixinStandardHelpOptions = true, version = "app 1.0",
-        description = "Compares two configuration files and shows a difference.")
-public class Differ implements Callable {
+public class Differ{
 
-    @Parameters(index = "0", description = "path to first file")
-    String filepath1;
-
-    @Parameters(index = "1", description = "path to second file")
-    String filepath2;
-
-    @Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
-    private String format = "stylish";
-
-    @Override
-    public String call() {
-        String string1;
-
-        try {
-            string1 = fileToString(filepath1);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "error with fileToString";
-        }
-
-        String string2;
-
-        try {
-            string2 = fileToString(filepath2);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "error with fileToString";
-        }
-
-        Map map1;
-        try {
-            map1 = getData(string1);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "error with getData";
-        }
-        Map map2;
-        try {
-            map2 = getData(string2);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "error with getData";
-        }
-
-        String data;
-        try {
-            data = generate(map1, map2);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return "error with generate";
-        }
-        System.out.println(data);
-        return "0";
-    }
-
-    // это наверно в engine позапихивать
-    public String fileToString(String filepath) throws IOException {
+    public static String fileToString(String filepath) throws IOException {
         Path filename = Path.of(filepath);
         return Files.readString(filename);
     }
