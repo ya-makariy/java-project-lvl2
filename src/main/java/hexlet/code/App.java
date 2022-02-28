@@ -7,6 +7,7 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -25,45 +26,48 @@ public final class App implements Callable {
 
     @Override
     public String call() {
-        String string1;
+        String string1 = null;
 
         try {
             string1 = Differ.fileToString(filepath1);
         } catch (IOException e) {
             e.printStackTrace();
-            return "error with fileToString";
+            //return "error with fileToString";
         }
 
-        String string2;
+        String string2 = null;
 
         try {
             string2 = Differ.fileToString(filepath2);
         } catch (IOException e) {
             e.printStackTrace();
-            return "error with fileToString";
+            //return "error with fileToString";
         }
 
-        Map map1;
+        Map map1 = null;
         try {
             map1 = Differ.getData(string1);
         } catch (Exception e) {
             e.printStackTrace();
-            return "error with getData";
+            //return "error with getData";
         }
-        Map map2;
+        Map map2 = null;
         try {
             map2 = Differ.getData(string2);
         } catch (Exception e) {
             e.printStackTrace();
-            return "error with getData";
+            //return "error with getData";
         }
 
-        String data;
+        LinkedHashMap<String, Object> sortedmap;
+        sortedmap = Differ.sorteddata(map1, map2);
+
+        String data = null;
         try {
-            data = Differ.generate(map1, map2);
+            data = Differ.generate(map1, map2, sortedmap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            return "error with generate";
+            //return "error with generate";
         }
         System.out.println(data);
         return "0";

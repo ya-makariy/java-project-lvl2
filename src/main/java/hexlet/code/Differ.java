@@ -31,35 +31,36 @@ public class Differ {
                 .replaceAll("\\}", "\n\\}");
     }
 
-
-    public static String generate(Map datafile1, Map datafile2) throws JsonProcessingException {
-        //в другой метод
+    public static LinkedHashMap<String, Object> sorteddata(Map datafile1, Map datafile2) {
         TreeMap<String, Object> fullData = new TreeMap<>();
         fullData.putAll(datafile1);
         fullData.putAll(datafile2);
         //return fullData.toString();
 
-        LinkedHashMap<String, Object> datadata = new LinkedHashMap(fullData);
+        //udalit
+        return (LinkedHashMap<String, Object>) new LinkedHashMap(fullData);
+    }
 
-        //sorting
+    public static String generate(Map data1, Map data2, Map<String, Object> sorted) throws JsonProcessingException {
+
         Map<String, Object>  newdata = new LinkedHashMap();
-        for (String key1: datadata.keySet()) {
-            if (datafile1.containsKey(key1) && datafile2.containsKey(key1)) {
-                if (datadata.get(key1).equals(datafile1.get(key1))) {
+        for (String key1: sorted.keySet()) {
+            if (data1.containsKey(key1) && data2.containsKey(key1)) {
+                if (sorted.get(key1).equals(data1.get(key1))) {
                     String key = "  " + key1;
-                    newdata.put(key, datadata.get(key1));
+                    newdata.put(key, sorted.get(key1));
                 } else {
                     String mkey = "- " + key1;
                     String pkey = "+ " + key1;
-                    newdata.put(mkey, datafile1.get(key1));
-                    newdata.put(pkey, datadata.get(key1));
+                    newdata.put(mkey, data1.get(key1));
+                    newdata.put(pkey, sorted.get(key1));
                 }
-            } else if (datafile1.containsKey(key1)) {
+            } else if (data1.containsKey(key1)) {
                 String key = "- " + key1;
-                newdata.put(key, datadata.get(key1));
-            } else if (datafile2.containsKey(key1)) {
+                newdata.put(key, sorted.get(key1));
+            } else if (data2.containsKey(key1)) {
                 String key = "+ " + key1;
-                newdata.put(key, datadata.get(key1));
+                newdata.put(key, sorted.get(key1));
             }
         }
 
