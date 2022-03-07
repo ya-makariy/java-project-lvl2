@@ -7,8 +7,10 @@
 
 plugins {
     id 'com.github.ben-manes.versions' version '0.39.0'
+    id 'com.adarshr.test-logger' version '3.2.0'
     id 'application'
     id 'checkstyle'
+    id 'jacoco'
 }
 
 repositories {
@@ -18,7 +20,11 @@ repositories {
 dependencies {
     implementation 'info.picocli:picocli:4.6.3'
     annotationProcessor 'info.picocli:picocli-codegen:4.6.3'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.6'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
+    testImplementation 'org.assertj:assertj-core:3.22.0'
+
 
 }
 group = 'hexlet.code'
@@ -33,6 +39,30 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+    reportsDir = file("$buildDir/jacoco")
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
+    }
+    dependsOn test
+}
+
+testlogger {
+    theme 'standard-parallel'
+    showStandardStreams true
 }
 
 application {

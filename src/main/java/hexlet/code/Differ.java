@@ -58,7 +58,7 @@ public class Differ {
             } else if (data1.containsKey(key1)) {
                 String key = "- " + key1;
                 newdata.put(key, sorted.get(key1));
-            } else if (data2.containsKey(key1)) {
+            } else {
                 String key = "+ " + key1;
                 newdata.put(key, sorted.get(key1));
             }

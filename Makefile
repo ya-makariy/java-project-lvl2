@@ -21,3 +21,7 @@ lint:
 .PHONY: build
 build:
 	./gradlew clean build
+
+.PHONY: test
+test:
+	./gradlew test
