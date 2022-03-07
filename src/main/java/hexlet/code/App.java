@@ -29,7 +29,7 @@ public final class App implements Callable {
         String string1 = null;
 
         try {
-            string1 = Differ.fileToString(filepath1);
+            string1 = Parser.fileToString(filepath1);
         } catch (IOException e) {
             e.printStackTrace();
             //return "error with fileToString";
@@ -38,7 +38,7 @@ public final class App implements Callable {
         String string2 = null;
 
         try {
-            string2 = Differ.fileToString(filepath2);
+            string2 = Parser.fileToString(filepath2);
         } catch (IOException e) {
             e.printStackTrace();
             //return "error with fileToString";
@@ -46,14 +46,14 @@ public final class App implements Callable {
 
         Map map1 = null;
         try {
-            map1 = Differ.getData(string1);
+            map1 = Parser.getData(string1);
         } catch (Exception e) {
             e.printStackTrace();
             //return "error with getData";
         }
         Map map2 = null;
         try {
-            map2 = Differ.getData(string2);
+            map2 = Parser.getData(string2);
         } catch (Exception e) {
             e.printStackTrace();
             //return "error with getData";

@@ -1,35 +1,12 @@
 package hexlet.code;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class Differ {
-
-    public static String fileToString(String filepath) throws IOException {
-        Path filename = Path.of(filepath);
-        return Files.readString(filename);
-    }
-
-    public static Map getData(String content) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(content, Map.class);
-    }
-
-    public static String getStylish(Map differdata) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(differdata)
-                .replaceFirst("\\{", "\\{\n  ")
-                .replaceAll("\"", "")
-                .replaceAll(",", ",\n  ")
-                .replaceAll("\\}", "\n\\}");
-    }
 
     public static LinkedHashMap<String, Object> sorteddata(Map datafile1, Map datafile2) {
         TreeMap<String, Object> fullData = new TreeMap<>();
@@ -64,7 +41,7 @@ public class Differ {
             }
         }
 
-        return getStylish(newdata);
+        return Parser.getStylish(newdata);
 
     }
 

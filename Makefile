@@ -24,4 +24,4 @@ build:
 
 .PHONY: test
 test:
-	./gradlew test
+	./gradlew clean test

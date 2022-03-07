@@ -33,10 +33,10 @@ class AppTest {
 
     @BeforeAll
     public static void beforeAll() throws Exception {
-        String data1 = Differ.fileToString(resourcesPath + "file1.json");
-        String data2 = Differ.fileToString(resourcesPath + "file2.json");
-        map1 = Differ.getData(data1);
-        map2 = Differ.getData(data2);
+        String data1 = Parser.fileToString(resourcesPath + "file1.json");
+        String data2 = Parser.fileToString(resourcesPath + "file2.json");
+        map1 = Parser.getData(data1);
+        map2 = Parser.getData(data2);
         sortedmap = Differ.sorteddata(map1, map2);
         System.setOut(new PrintStream(outContent));
     }
