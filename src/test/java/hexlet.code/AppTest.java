@@ -31,6 +31,7 @@ class AppTest {
             + "  + timeout: 20\n"
             + "  + verbose: true\n" + "}";
 
+    //добавить второй экспектед строку и сделать их при помощи чтения из файла
 
     @BeforeAll
     public static void beforeAll() throws Exception {
@@ -47,8 +48,6 @@ class AppTest {
 
     @Test
     void testDifferGenerateJson() throws Exception {
-        //Map map1 = Parser.getData(datajson1);
-        //Map map2 = Parser.getData(datajson2);
         LinkedHashMap<String, Object> sortedmap = Differ.sorteddata(datajson1, datajson2);
         String dataResult = Differ.generate(datajson1, datajson2, sortedmap);
 
@@ -57,8 +56,6 @@ class AppTest {
 
     @Test
     void testDifferGenerateYaml() throws Exception {
-        //Map map1 = Parser.getData(datayaml1);
-        //Map map2 = Parser.getData(datayaml2);
         LinkedHashMap<String, Object> sortedmap = Differ.sorteddata(datayaml1, datayaml2);
         String dataResult = Differ.generate(datayaml1, datayaml2, sortedmap);
 
