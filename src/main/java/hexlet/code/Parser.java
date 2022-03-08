@@ -14,10 +14,8 @@ public class Parser {
 
     public static Map getData(String filepath) throws Exception { //getData
         Path filename = Path.of(filepath);
-        //System.out.println(Files.readString(filename));
         if (filepath.endsWith(".json")) {
             return getDataJson(Files.readString(filename));
-            //return Files.readString(filename);
         } else if (filepath.endsWith(".yml") || filepath.endsWith(".yaml")) {
             return getDataYaml(Files.readString(filename));
         } else {
@@ -27,7 +25,6 @@ public class Parser {
 
     public static Map getDataJson(String content) throws Exception {  //getDataJson
         ObjectMapper mapper = new ObjectMapper(new JsonFactory());
-        System.out.println(mapper.readValue(content, Map.class).toString());
         return mapper.readValue(content, Map.class);
     }
 
@@ -36,12 +33,23 @@ public class Parser {
         return mapper.readValue(content, Map.class);
     }
 
+
+    //edit method getStylish
     public static String getStylish(Map differdata) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(differdata)
-                .replaceFirst("\\{", "\\{\n  ")
-                .replaceAll("\"", "")
-                .replaceAll(",", ",\n  ")
-                .replaceAll("\\}", "\n\\}");
+        //ObjectMapper mapper = new ObjectMapper();
+        StringBuilder output = new StringBuilder("{\n");
+        for (Object key: differdata.keySet()) {
+            output.append("  ")
+                    .append(key.toString())
+                    .append(": ")
+                    .append(differdata.get(key))
+                    .append("\n");
+        }
+        return output + "}";
+        //return mapper.writeValueAsString(differdata)
+        //        .replaceFirst("\\{", "\\{\n  ")
+        //        .replaceAll("\"", "")
+        //        .replaceAll(",", ",\n  ")
+        //        .replaceAll("\\}", "\n\\}");
     }
 }

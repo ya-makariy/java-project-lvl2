@@ -12,9 +12,6 @@ public class Differ {
         TreeMap<String, Object> fullData = new TreeMap<>();
         fullData.putAll(datafile1);
         fullData.putAll(datafile2);
-        //return fullData.toString();
-
-        //udalit
         return (LinkedHashMap<String, Object>) new LinkedHashMap(fullData);
     }
 
@@ -23,7 +20,7 @@ public class Differ {
         Map<String, Object>  newdata = new LinkedHashMap();
         for (String key1: sorted.keySet()) {
             if (data1.containsKey(key1) && data2.containsKey(key1)) {
-                if (sorted.get(key1) == (data1.get(key1))) {
+                if (hashCode(sorted.get(key1))  == hashCode(data1.get(key1))) {
                     String key = "  " + key1;
                     newdata.put(key, sorted.get(key1));
                 } else {
@@ -45,4 +42,7 @@ public class Differ {
 
     }
 
+    public static int hashCode(Object o) {
+        return o != null ? o.hashCode() : 0;
+    }
 }
