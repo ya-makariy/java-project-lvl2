@@ -23,7 +23,7 @@ public class Differ {
         Map<String, Object>  newdata = new LinkedHashMap();
         for (String key1: sorted.keySet()) {
             if (data1.containsKey(key1) && data2.containsKey(key1)) {
-                if (sorted.get(key1).equals(data1.get(key1))) {
+                if (sorted.get(key1) == (data1.get(key1))) {
                     String key = "  " + key1;
                     newdata.put(key, sorted.get(key1));
                 } else {

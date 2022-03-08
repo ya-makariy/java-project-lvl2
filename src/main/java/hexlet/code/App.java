@@ -6,7 +6,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-import java.io.IOException;
+//import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -26,34 +26,34 @@ public final class App implements Callable {
 
     @Override
     public String call() {
-        String string1 = null;
-
-        try {
-            string1 = Parser.fileToString(filepath1);
-        } catch (IOException e) {
-            e.printStackTrace();
-            //return "error with fileToString";
-        }
-
-        String string2 = null;
-
-        try {
-            string2 = Parser.fileToString(filepath2);
-        } catch (IOException e) {
-            e.printStackTrace();
-            //return "error with fileToString";
-        }
+        //String string1 = null;
+//
+        //try {
+        //    string1 = Parser.fileToString(filepath1);
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //    //return "error with fileToString";
+        //}
+//
+        //String string2 = null;
+//
+        //try {
+        //    string2 = Parser.fileToString(filepath2);
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //    //return "error with fileToString";
+        //}
 
         Map map1 = null;
         try {
-            map1 = Parser.getData(string1);
+            map1 = Parser.getData(filepath1);
         } catch (Exception e) {
             e.printStackTrace();
             //return "error with getData";
         }
         Map map2 = null;
         try {
-            map2 = Parser.getData(string2);
+            map2 = Parser.getData(filepath2);
         } catch (Exception e) {
             e.printStackTrace();
             //return "error with getData";

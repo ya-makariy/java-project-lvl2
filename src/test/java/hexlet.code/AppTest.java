@@ -1,6 +1,6 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+//import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
@@ -16,9 +16,10 @@ import java.util.Map;
 
 class AppTest {
 
-    private static Map map1;
-    private static Map map2;
-    private static LinkedHashMap<String, Object> sortedmap;
+    private static Map datajson1;
+    private static Map datajson2;
+    private static Map datayaml1;
+    private static Map datayaml2;
     private static String resourcesPath = "src/test/resources/";
     private static ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private static PrintStream originalOut = System.out;
@@ -33,11 +34,10 @@ class AppTest {
 
     @BeforeAll
     public static void beforeAll() throws Exception {
-        String data1 = Parser.fileToString(resourcesPath + "file1.json");
-        String data2 = Parser.fileToString(resourcesPath + "file2.json");
-        map1 = Parser.getData(data1);
-        map2 = Parser.getData(data2);
-        sortedmap = Differ.sorteddata(map1, map2);
+        datajson1 = Parser.getData(resourcesPath + "json/file1.json");
+        datajson2 = Parser.getData(resourcesPath + "json/file2.json");
+        datayaml1 = Parser.getData(resourcesPath + "yaml/file1.yaml");
+        datayaml2 = Parser.getData(resourcesPath + "yaml/file2.yaml");
         System.setOut(new PrintStream(outContent));
     }
     @AfterAll
@@ -46,20 +46,40 @@ class AppTest {
     }
 
     @Test
-    void testDifferGenerate() throws JsonProcessingException {
-
-        String dataResult = Differ.generate(map1, map2, sortedmap);
+    void testDifferGenerateJson() throws Exception {
+        //Map map1 = Parser.getData(datajson1);
+        //Map map2 = Parser.getData(datajson2);
+        LinkedHashMap<String, Object> sortedmap = Differ.sorteddata(datajson1, datajson2);
+        String dataResult = Differ.generate(datajson1, datajson2, sortedmap);
 
         assertThat(dataResult).isEqualTo(expected);
     }
 
     @Test
-    void testAppMain() {
+    void testDifferGenerateYaml() throws Exception {
+        //Map map1 = Parser.getData(datayaml1);
+        //Map map2 = Parser.getData(datayaml2);
+        LinkedHashMap<String, Object> sortedmap = Differ.sorteddata(datayaml1, datayaml2);
+        String dataResult = Differ.generate(datayaml1, datayaml2, sortedmap);
+
+        assertThat(dataResult).isEqualTo(expected);
+    }
+
+    @Test
+    void testAppMainJson() {
         String expectedout = expected + "\n";
-        String[] appArgs = {resourcesPath + "file1.json", resourcesPath + "file2.json"};
+        String[] appArgs = {resourcesPath + "json/file1.json", resourcesPath + "json/file2.json"};
         App.main(appArgs);
         assertThat(outContent.toString()).isEqualTo(expectedout);
     }
+
+    //@Test
+    //void testAppMainYaml() {
+    //    String expectedout = expected + "\n";
+    //    String[] appArgs = {resourcesPath + "file1.yaml", resourcesPath + "file2.yaml"};
+    //    App.main(appArgs);
+    //    assertThat(outContent.toString()).isEqualTo(expectedout);
+    //}
 
 
 }
