@@ -26,37 +26,18 @@ public final class App implements Callable {
 
     @Override
     public String call() {
-        //String string1 = null;
-//
-        //try {
-        //    string1 = Parser.fileToString(filepath1);
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //    //return "error with fileToString";
-        //}
-//
-        //String string2 = null;
-//
-        //try {
-        //    string2 = Parser.fileToString(filepath2);
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //    //return "error with fileToString";
-        //}
 
         Map map1 = null;
         try {
             map1 = Parser.getData(filepath1);
         } catch (Exception e) {
             e.printStackTrace();
-            //return "error with getData";
         }
         Map map2 = null;
         try {
             map2 = Parser.getData(filepath2);
         } catch (Exception e) {
             e.printStackTrace();
-            //return "error with getData";
         }
 
         LinkedHashMap<String, Object> sortedmap;
@@ -67,7 +48,6 @@ public final class App implements Callable {
             data = Differ.generate(map1, map2, sortedmap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            //return "error with generate";
         }
         System.out.println(data);
         return "0";

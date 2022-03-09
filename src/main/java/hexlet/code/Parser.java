@@ -5,7 +5,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-//import java.io.IOException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,7 +26,7 @@ public class Parser {
         return Files.readString(Path.of(filepath));
     }
 
-    public static Map getDataJson(String content) throws Exception {  //getDataJson
+    public static Map getDataJson(String content) throws Exception {
         ObjectMapper mapper = new ObjectMapper(new JsonFactory());
         return mapper.readValue(content, Map.class);
     }
@@ -38,9 +37,7 @@ public class Parser {
     }
 
 
-    //edit method getStylish
     public static String getStylish(Map differdata) throws JsonProcessingException {
-        //ObjectMapper mapper = new ObjectMapper();
         StringBuilder output = new StringBuilder("{\n");
         for (Object key: differdata.keySet()) {
             output.append("  ")
@@ -50,10 +47,5 @@ public class Parser {
                     .append("\n");
         }
         return output + "}";
-        //return mapper.writeValueAsString(differdata)
-        //        .replaceFirst("\\{", "\\{\n  ")
-        //        .replaceAll("\"", "")
-        //        .replaceAll(",", ",\n  ")
-        //        .replaceAll("\\}", "\n\\}");
     }
 }
