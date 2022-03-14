@@ -1,12 +1,38 @@
 package hexlet.code.formatters;
 
+import java.util.Map;
+import static hexlet.code.Differ.KEYLENGTH;
+
 public class PlainFormatter {
+
+    public static String generatePlain(Map data1, Map data2, Map<String, Object> diff) {
+        StringBuilder output = new StringBuilder();
+        for (String key: diff.keySet()) {
+            String oKey = key.substring(KEYLENGTH);
+            switch (key.substring(0, KEYLENGTH)) {
+                case("DEL"):
+                    output.append(wasRemoved(oKey));
+                    break;
+                case("ADD"):
+                    output.append(wasAdded(oKey, data2.get(oKey)));
+                    break;
+                case ("CHV"):
+                    output.append(wasUpdated(oKey, data1.get(oKey), data2.get(oKey)));
+                    break;
+                default:
+                    output.append(unchanged());
+                    break;
+            }
+        }
+        return output.toString();
+    }
+
     public static String wasRemoved(String key) {
         return String.format("Property '%s' was removed\n", key);
     }
 
-    public static String wasAdded(String key, Object oldvalue) {
-        return String.format("Property '%s' was added with value: %s\n", key, objCheck(oldvalue));
+    public static String wasAdded(String key, Object value) {
+        return String.format("Property '%s' was added with value: %s\n", key, objCheck(value));
     }
 
     public static String wasUpdated(String key, Object oldValue, Object newValue) {

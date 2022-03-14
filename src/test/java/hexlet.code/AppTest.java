@@ -80,8 +80,17 @@ class AppTest {
             Property 'setting2' was updated. From 200 to 300
             Property 'setting3' was updated. From true to 'none'
             """;
-
-
+    private static final String EXPECTEDJSONSHORT = "{\"DEL: follow\":false,\"NOT_CH: host\":\"hexlet.io\","
+            + "\"DEL: proxy\":\"123.234.53.22\",\"CH_FROM: timeout\":50,\"CH_TO: timeout\":20,\"ADD: verbose\":true}";
+    private static final String EXPECTEDJSONLONG = "{\"NOT_CH: chars1\":[\"a\",\"b\",\"c\"],"
+        + "\"CH_FROM: chars2\":[\"d\",\"e\",\"f\"],\"CH_TO: chars2\":false,\"CH_FROM: checked\":false,"
+        + "\"CH_TO: checked\":true,\"CH_FROM: default\":null,\"CH_TO: default\":[\"value1\",\"value2\"],"
+        + "\"CH_FROM: id\":45,\"CH_TO: id\":null,\"DEL: key1\":\"value1\",\"ADD: key2\":\"value2\","
+        + "\"NOT_CH: numbers1\":[1,2,3,4],\"CH_FROM: numbers2\":[2,3,4,5],\"CH_TO: numbers2\":[22,33,44,55],"
+        + "\"DEL: numbers3\":[3,4,5],\"ADD: numbers4\":[4,5,6],"
+        + "\"ADD: obj1\":{\"nestedKey\":\"value\",\"isNested\":true},\"CH_FROM: setting1\":\"Some value\","
+        + "\"CH_TO: setting1\":\"Another value\",\"CH_FROM: setting2\":200,\"CH_TO: setting2\":300,"
+        + "\"CH_FROM: setting3\":true,\"CH_TO: setting3\":\"none\"}";
     @BeforeAll
     static void setStreams() {
         System.setOut(new PrintStream(out));
@@ -112,7 +121,7 @@ class AppTest {
     }
 
     @Test
-    void testDifferGenerateJsonStylishShort() throws Exception {
+    void testDifferGenerateJSONStylishShort() throws Exception {
         format = "stylish";
         filepath1 = RESOURCESPATH + "json/file1.json";
         filepath2 = RESOURCESPATH + "json/file2.json";
@@ -121,7 +130,7 @@ class AppTest {
     }
 
     @Test
-    void testDifferGenerateJsonPlainShort() throws Exception {
+    void testDifferGenerateJSONPlainShort() throws Exception {
         format = "plain";
         filepath1 = RESOURCESPATH + "json/file1.json";
         filepath2 = RESOURCESPATH + "json/file2.json";
@@ -130,7 +139,7 @@ class AppTest {
     }
 
     @Test
-    void testDifferGenerateYamlStylishShort() throws Exception {
+    void testDifferGenerateYAMLStylishShort() throws Exception {
         format = "stylish";
         filepath1 = RESOURCESPATH + "yaml/file1.yaml";
         filepath2 = RESOURCESPATH + "yaml/file2.yaml";
@@ -139,7 +148,7 @@ class AppTest {
     }
 
     @Test
-    void testDifferGenerateYamlPlainShort() throws Exception {
+    void testDifferGenerateYAMLPlainShort() throws Exception {
         format = "plain";
         filepath1 = RESOURCESPATH + "yaml/file1.yaml";
         filepath2 = RESOURCESPATH + "yaml/file2.yaml";
@@ -148,7 +157,7 @@ class AppTest {
     }
 
     @Test
-    void testDifferGenerateYamlStylishLong() throws Exception {
+    void testDifferGenerateYAMLStylishLong() throws Exception {
         format = "stylish";
         filepath1 = RESOURCESPATH + "yaml/longyaml1.yml";
         filepath2 = RESOURCESPATH + "yaml/longyaml2.yml";
@@ -157,7 +166,7 @@ class AppTest {
     }
 
     @Test
-    void testDifferGenerateYamlPlainLong() throws Exception {
+    void testDifferGenerateYAMLPlainLong() throws Exception {
         format = "plain";
         filepath1 = RESOURCESPATH + "yaml/longyaml1.yml";
         filepath2 = RESOURCESPATH + "yaml/longyaml2.yml";
@@ -166,7 +175,7 @@ class AppTest {
     }
 
     @Test
-    void testDifferGenerateJsonStylishLong() throws Exception {
+    void testDifferGenerateJSONStylishLong() throws Exception {
         format = "stylish";
         filepath1 = RESOURCESPATH + "json/longjson1.json";
         filepath2 = RESOURCESPATH + "json/longjson2.json";
@@ -175,7 +184,7 @@ class AppTest {
     }
 
     @Test
-    void testDifferGenerateJsonPlainLong() throws Exception {
+    void testDifferGenerateJSONPlainLong() throws Exception {
         format = "plain";
         filepath1 = RESOURCESPATH + "json/longjson1.json";
         filepath2 = RESOURCESPATH + "json/longjson2.json";
@@ -183,6 +192,40 @@ class AppTest {
         assertThat(dataResult).isEqualTo(EXPECTEDPLAINLONG);
     }
 
+    @Test
+    void testDifferGenerateJSONJsonShort() throws Exception {
+        format = "json";
+        filepath1 = RESOURCESPATH + "json/file1.json";
+        filepath2 = RESOURCESPATH + "json/file2.json";
+        String dataResult = Differ.generate(filepath1, filepath2, format);
+        assertThat(dataResult).isEqualTo(EXPECTEDJSONSHORT);
+    }
+
+    @Test
+    void testDifferGenerateJSONJsonLong() throws Exception {
+        format = "json";
+        filepath1 = RESOURCESPATH + "json/longjson1.json";
+        filepath2 = RESOURCESPATH + "json/longjson2.json";
+        String dataResult = Differ.generate(filepath1, filepath2, format);
+        assertThat(dataResult).isEqualTo(EXPECTEDJSONLONG);
+    }
+    @Test
+    void testDifferGenerateYAMLJsonShort() throws Exception {
+        format = "json";
+        filepath1 = RESOURCESPATH + "yaml/file1.yaml";
+        filepath2 = RESOURCESPATH + "yaml/file2.yaml";
+        String dataResult = Differ.generate(filepath1, filepath2, format);
+        assertThat(dataResult).isEqualTo(EXPECTEDJSONSHORT);
+    }
+
+    @Test
+    void testDifferGenerateYAMLJsonLong() throws Exception {
+        format = "json";
+        filepath1 = RESOURCESPATH + "yaml/longyaml1.yml";
+        filepath2 = RESOURCESPATH + "yaml/longyaml2.yml";
+        String dataResult = Differ.generate(filepath1, filepath2, format);
+        assertThat(dataResult).isEqualTo(EXPECTEDJSONLONG);
+    }
 //Тест на ошибку
     @Test
     void testDifferGenerateWrongFormatException() {
