@@ -143,7 +143,7 @@ class DifferTest {
 
 //Тест на ошибку
     @Test
-    void testDifferWrongFormatException() {
+    void testDifferGenerateWrongFormatException() {
         format = "wrong";
         filepath1 = resourcesPath + "json/file1.json";
         filepath2 = resourcesPath + "json/file2.json";
@@ -153,7 +153,7 @@ class DifferTest {
         assertThat(thrown.getMessage()).isEqualTo("ERROR: Don't know 'wrong' format type");
     }
     @Test
-    void testDifferWrongExtensionException() {
+    void testDifferGenerateWrongExtensionException() {
         format = "plain";
         filepath1 = resourcesPath + "json/file1.wrong";
         filepath2 = resourcesPath + "json/file2.wrong";
