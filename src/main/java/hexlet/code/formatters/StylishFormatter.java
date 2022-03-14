@@ -24,7 +24,7 @@ public class StylishFormatter {
                     break;
             }
         }
-        return output.append("}\n").toString();
+        return output.append("}").toString();
     }
 
     public static String wasRemoved(String key, Object value) {

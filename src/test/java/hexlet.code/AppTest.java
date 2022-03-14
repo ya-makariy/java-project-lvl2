@@ -31,8 +31,7 @@ class AppTest {
               - timeout: 50
               + timeout: 20
               + verbose: true
-            }
-            """;
+            }""";
     private static final String EXPECTEDPLAINSHORT = """
             Property 'follow' was removed
             Property 'proxy' was removed
@@ -64,8 +63,7 @@ class AppTest {
               + setting2: 300
               - setting3: true
               + setting3: none
-            }
-            """;
+            }""";
     private static final String EXPECTEDPLAINLONG = """
             Property 'chars2' was updated. From [complex value] to false
             Property 'checked' was updated. From false to true
