@@ -36,8 +36,7 @@ class AppTest {
             Property 'follow' was removed
             Property 'proxy' was removed
             Property 'timeout' was updated. From 50 to 20
-            Property 'verbose' was added with value: true
-            """;
+            Property 'verbose' was added with value: true""";
     private static final String EXPECTEDSTYLISHLONG = """
             {
                 chars1: [a, b, c]
@@ -77,8 +76,7 @@ class AppTest {
             Property 'obj1' was added with value: [complex value]
             Property 'setting1' was updated. From 'Some value' to 'Another value'
             Property 'setting2' was updated. From 200 to 300
-            Property 'setting3' was updated. From true to 'none'
-            """;
+            Property 'setting3' was updated. From true to 'none'""";
     private static final String EXPECTEDJSONSHORT = "{\"DEL: follow\":false,\"NOT_CH: host\":\"hexlet.io\","
             + "\"DEL: proxy\":\"123.234.53.22\",\"CH_FROM: timeout\":50,\"CH_TO: timeout\":20,\"ADD: verbose\":true}";
     private static final String EXPECTEDJSONLONG = "{\"NOT_CH: chars1\":[\"a\",\"b\",\"c\"],"

@@ -24,7 +24,7 @@ public class PlainFormatter {
                     break;
             }
         }
-        return output.toString();
+        return output.substring(0, output.length()-1);
     }
 
     public static String wasRemoved(String key) {
