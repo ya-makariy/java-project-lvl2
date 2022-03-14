@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static hexlet.code.App.setFormat;
+//import static hexlet.code.App.setFormat;
 
 class AppTest {
     private static ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -21,6 +21,7 @@ class AppTest {
     private static PrintStream originalErr = System.err;
     private static String filepath1;
     private static String filepath2;
+    private static String format;
     private static final String RESOURCESPATH = "src/test/resources/";
     private static final String EXPECTEDSTYLISHSHORT = """
             {
@@ -123,128 +124,128 @@ class AppTest {
 
     @Test
     void testDifferGenerateJSONStylishShort() throws Exception {
-        setFormat("stylish");
+        format = "stylish";
         filepath1 = RESOURCESPATH + "json/file1.json";
         filepath2 = RESOURCESPATH + "json/file2.json";
-        String dataResult = Differ.generate(filepath1, filepath2);
+        String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDSTYLISHSHORT);
     }
 
     @Test
     void testDifferGenerateJSONPlainShort() throws Exception {
-        setFormat("plain");
+        format = "plain";
         filepath1 = RESOURCESPATH + "json/file1.json";
         filepath2 = RESOURCESPATH + "json/file2.json";
-        String dataResult = Differ.generate(filepath1, filepath2);
+        String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDPLAINSHORT);
     }
 
     @Test
     void testDifferGenerateYAMLStylishShort() throws Exception {
-        setFormat("stylish");
+        format = "stylish";
         filepath1 = RESOURCESPATH + "yaml/file1.yaml";
         filepath2 = RESOURCESPATH + "yaml/file2.yaml";
-        String dataResult = Differ.generate(filepath1, filepath2);
+        String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDSTYLISHSHORT);
     }
 
     @Test
     void testDifferGenerateYAMLPlainShort() throws Exception {
-        setFormat("plain");
+        format = "plain";
         filepath1 = RESOURCESPATH + "yaml/file1.yaml";
         filepath2 = RESOURCESPATH + "yaml/file2.yaml";
-        String dataResult = Differ.generate(filepath1, filepath2);
+        String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDPLAINSHORT);
     }
 
     @Test
     void testDifferGenerateYAMLStylishLong() throws Exception {
-        setFormat("stylish");
+        format = "stylish";
         filepath1 = RESOURCESPATH + "yaml/longyaml1.yml";
         filepath2 = RESOURCESPATH + "yaml/longyaml2.yml";
-        String dataResult = Differ.generate(filepath1, filepath2);
+        String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDSTYLISHLONG);
     }
 
     @Test
     void testDifferGenerateYAMLPlainLong() throws Exception {
-        setFormat("plain");
+        format = "plain";
         filepath1 = RESOURCESPATH + "yaml/longyaml1.yml";
         filepath2 = RESOURCESPATH + "yaml/longyaml2.yml";
-        String dataResult = Differ.generate(filepath1, filepath2);
+        String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDPLAINLONG);
     }
 
     @Test
     void testDifferGenerateJSONStylishLong() throws Exception {
-        setFormat("stylish");
+        format = "stylish";
         filepath1 = RESOURCESPATH + "json/longjson1.json";
         filepath2 = RESOURCESPATH + "json/longjson2.json";
-        String dataResult = Differ.generate(filepath1, filepath2);
+        String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDSTYLISHLONG);
     }
 
     @Test
     void testDifferGenerateJSONPlainLong() throws Exception {
-        setFormat("plain");
+        format = "plain";
         filepath1 = RESOURCESPATH + "json/longjson1.json";
         filepath2 = RESOURCESPATH + "json/longjson2.json";
-        String dataResult = Differ.generate(filepath1, filepath2);
+        String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDPLAINLONG);
     }
 
     @Test
     void testDifferGenerateJSONJsonShort() throws Exception {
-        setFormat("json");
+        format = "json";
         filepath1 = RESOURCESPATH + "json/file1.json";
         filepath2 = RESOURCESPATH + "json/file2.json";
-        String dataResult = Differ.generate(filepath1, filepath2);
+        String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDJSONSHORT);
     }
 
     @Test
     void testDifferGenerateJSONJsonLong() throws Exception {
-        setFormat("json");
+        format = "json";
         filepath1 = RESOURCESPATH + "json/longjson1.json";
         filepath2 = RESOURCESPATH + "json/longjson2.json";
-        String dataResult = Differ.generate(filepath1, filepath2);
+        String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDJSONLONG);
     }
     @Test
     void testDifferGenerateYAMLJsonShort() throws Exception {
-        setFormat("json");
+        format = "json";
         filepath1 = RESOURCESPATH + "yaml/file1.yaml";
         filepath2 = RESOURCESPATH + "yaml/file2.yaml";
-        String dataResult = Differ.generate(filepath1, filepath2);
+        String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDJSONSHORT);
     }
 
     @Test
     void testDifferGenerateYAMLJsonLong() throws Exception {
-        setFormat("json");
+        format = "json";
         filepath1 = RESOURCESPATH + "yaml/longyaml1.yml";
         filepath2 = RESOURCESPATH + "yaml/longyaml2.yml";
-        String dataResult = Differ.generate(filepath1, filepath2);
+        String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDJSONLONG);
     }
 //Тест на ошибку
     @Test
     void testDifferGenerateWrongformatException() {
-        setFormat("wrong");
+        format = "wrong";
         filepath1 = RESOURCESPATH + "json/file1.json";
         filepath2 = RESOURCESPATH + "json/file2.json";
         Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
-            String dataResult = Differ.generate(filepath1, filepath2);
+            String dataResult = Differ.generate(filepath1, filepath2, format);
         });
         assertThat(thrown.getMessage()).isEqualTo("ERROR: Don't know 'wrong' format type");
     }
     @Test
     void testDifferGenerateWrongExtensionException() {
-        setFormat("plain");
+        format = "plain";
         filepath1 = RESOURCESPATH + "json/file1.wrong";
         filepath2 = RESOURCESPATH + "json/file2.wrong";
         Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
-            String dataResult = Differ.generate(filepath1, filepath2);
+            String dataResult = Differ.generate(filepath1, filepath2, format);
         });
         assertThat(thrown.getMessage()).isEqualTo("ERROR: Don't know '.wrong' extension!");
     }

@@ -37,8 +37,8 @@ public final class App implements Callable {
         return format;
     }
 
-    //for test different format
-    public static void setFormat(String formatVal) {
-        format = formatVal;
-    }
+    ////for test different format
+    //public static void setFormat(String formatVal) {
+    //    format = formatVal;
+    //}
 }

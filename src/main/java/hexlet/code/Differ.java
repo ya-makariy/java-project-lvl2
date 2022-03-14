@@ -19,13 +19,16 @@ public class Differ {
         return (LinkedHashMap<String, Object>) new LinkedHashMap(fullData);
     }
 
-
     public static String generate(String filepath1, String filepath2) throws Exception {
+        return generate(filepath1, filepath2, getFormat());
+    }
+
+    public static String generate(String filepath1, String filepath2, String format) throws Exception {
         Map data1 = Parser.getData(filepath1);
         Map data2 = Parser.getData(filepath2);
         LinkedHashMap<String, Object> diffData = createDiff(data1, data2, sortedData(data1, data2));
 
-        switch (getFormat()) {
+        switch (format) {
             case ("plain"):
                 return generatePlain(data1, data2, diffData);
             case ("stylish"):
@@ -33,7 +36,7 @@ public class Differ {
             case ("json"):
                 return generateJson(data1, data2, diffData);
             default:
-                throw new IllegalArgumentException(String.format("ERROR: Don't know '%s' format type", getFormat()));
+                throw new IllegalArgumentException(String.format("ERROR: Don't know '%s' format type", format));
         }
     }
 
