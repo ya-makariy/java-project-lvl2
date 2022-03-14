@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import static hexlet.code.formatters.JsonFormater.generateJson;
 import static hexlet.code.formatters.PlainFormatter.generatePlain;
 import static hexlet.code.formatters.StylishFormatter.generateStylish;
+import static hexlet.code.App.FORMAT;
 
 public class Differ {
     public static final int KEYLENGTH = 3;
@@ -19,12 +20,12 @@ public class Differ {
     }
 
 
-    public static String generate(String filepath1, String filepath2, String formatName) throws Exception {
+    public static String generate(String filepath1, String filepath2) throws Exception {
         Map data1 = Parser.getData(filepath1);
         Map data2 = Parser.getData(filepath2);
         LinkedHashMap<String, Object> diffData = createDiff(data1, data2, sortedData(data1, data2));
 
-        switch (formatName) {
+        switch (FORMAT) {
             case ("plain"):
                 return generatePlain(data1, data2, diffData);
             case ("stylish"):
@@ -32,7 +33,7 @@ public class Differ {
             case ("json"):
                 return generateJson(data1, data2, diffData);
             default:
-                throw new IllegalArgumentException(String.format("ERROR: Don't know '%s' format type", formatName));
+                throw new IllegalArgumentException(String.format("ERROR: Don't know '%s' format type", FORMAT));
         }
     }
 

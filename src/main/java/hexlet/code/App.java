@@ -18,12 +18,12 @@ public final class App implements Callable {
     private String filepath2;
 
     @Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
-    private String format = "stylish";
+    public static String FORMAT = "stylish";
 
     @Override
     public String call() throws Exception {
 
-        String data = Differ.generate(filepath1, filepath2, format);
+        String data = Differ.generate(filepath1, filepath2);
 
         System.out.println(data);
         return "0";
