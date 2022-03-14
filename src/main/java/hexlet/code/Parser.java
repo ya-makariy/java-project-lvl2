@@ -17,7 +17,8 @@ public class Parser {
         } else if (filepath.endsWith(".yml") || filepath.endsWith(".yaml")) {
             return getDataYaml(getString(filepath));
         } else {
-            throw new IllegalArgumentException("Don't know this extension!");
+            throw new IllegalArgumentException(String.format("ERROR: Don't know '%s' extension!",
+                    filepath.substring(filepath.lastIndexOf("."))));
         }
     }
 

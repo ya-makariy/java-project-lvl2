@@ -142,11 +142,24 @@ class DifferTest {
     }
 
 //Тест на ошибку
-    //@Test
-    //void testDifferentWrongFormatException() throws Exception {
-    //    format = "wrong";
-    //    filepath1 = resourcesPath + "json/file1.json";
-    //    filepath2 = resourcesPath + "json/file2.json";
-    //    assertThrows(Differ.generate(filepath1,filepath2,format), );
-    //}
+    @Test
+    void testDifferWrongFormatException() {
+        format = "wrong";
+        filepath1 = resourcesPath + "json/file1.json";
+        filepath2 = resourcesPath + "json/file2.json";
+        Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
+            String dataResult = Differ.generate(filepath1, filepath2, format);
+        });
+        assertThat(thrown.getMessage()).isEqualTo("ERROR: Don't know 'wrong' format type");
+    }
+    @Test
+    void testDifferWrongExtensionException() {
+        format = "plain";
+        filepath1 = resourcesPath + "json/file1.wrong";
+        filepath2 = resourcesPath + "json/file2.wrong";
+        Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
+            String dataResult = Differ.generate(filepath1, filepath2, format);
+        });
+        assertThat(thrown.getMessage()).isEqualTo("ERROR: Don't know '.wrong' extension!");
+    }
 }
