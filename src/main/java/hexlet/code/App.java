@@ -18,7 +18,7 @@ public final class App implements Callable {
     private String filepath2;
 
     @Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
-    public static String FORMAT = "stylish";
+    private static String format = "stylish";
 
     @Override
     public String call() throws Exception {
@@ -31,5 +31,14 @@ public final class App implements Callable {
 
     public static void main(String[] args) {
         new CommandLine(new App()).execute(args);
+    }
+
+    public static String getFormat() {
+        return format;
+    }
+
+    //for test different format
+    public static void setFormat(String formatVal) {
+        format = formatVal;
     }
 }
