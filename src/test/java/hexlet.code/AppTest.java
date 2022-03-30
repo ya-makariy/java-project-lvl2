@@ -6,13 +6,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-//import static hexlet.code.App.setFormat;
 
 class AppTest {
     private static ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -235,14 +236,25 @@ class AppTest {
         });
         assertThat(thrown.getMessage()).isEqualTo("ERROR: Don't know 'wrong' format type");
     }
+
     @Test
-    void testDifferGenerateWrongExtensionException() {
-        format = "plain";
-        filepath1 = RESOURCESPATH + "json/file1.wrong";
-        filepath2 = RESOURCESPATH + "json/file2.wrong";
+    void testParserGetDataWrongDataFormatException() {
+        String content = "wrong-Content-da\nta+format";
         Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
-            String dataResult = Differ.generate(filepath1, filepath2, format);
+            Map data = Parser.getData(content);
         });
-        assertThat(thrown.getMessage()).isEqualTo("ERROR: Don't know '.wrong' extension!");
+        assertThat(thrown.getMessage()).isEqualTo("ERROR: Don't know this data format!");
     }
+
+    @Test
+    void  testGetDataByTypeWrongTypeDataFormatException() throws IOException {
+        filepath1 = RESOURCESPATH + "json/file1.json";
+        String content = Parser.getString(filepath1);
+        String type = "WRONG";
+        Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
+            Map data = Parser.getDataByType(content, type);
+        });
+        assertThat(thrown.getMessage()).isEqualTo("ERROR: Don't know 'WRONG' data format!");
+    }
+
 }

@@ -2,31 +2,35 @@ package hexlet.code;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import static hexlet.code.formatters.JsonFormater.generateJson;
 import static hexlet.code.formatters.PlainFormatter.generatePlain;
 import static hexlet.code.formatters.StylishFormatter.generateStylish;
-import static hexlet.code.App.getFormat;
 
 public class Differ {
     public static final int KEYLENGTH = 3;
 
-    public static LinkedHashMap<String, Object> sortedData(Map datafile1, Map datafile2) {
-        TreeMap<String, Object> fullData = new TreeMap<>();
+    public static LinkedHashMap sortedData(Map datafile1, Map datafile2) {
+        Map fullData = new TreeMap<>();
         fullData.putAll(datafile1);
         fullData.putAll(datafile2);
-        return (LinkedHashMap<String, Object>) new LinkedHashMap(fullData);
+        return new LinkedHashMap(fullData);
     }
 
     public static String generate(String filepath1, String filepath2) throws Exception {
-        return generate(filepath1, filepath2, getFormat());
+        return generate(filepath1, filepath2, "stylish");
     }
 
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
-        Map data1 = Parser.getData(filepath1);
-        Map data2 = Parser.getData(filepath2);
-        LinkedHashMap<String, Object> diffData = createDiff(data1, data2, sortedData(data1, data2));
+        String content1 = Parser.getString(filepath1);
+        String content2 = Parser.getString(filepath2);
+
+        Map data1 = Parser.getData(content1);
+        Map data2 = Parser.getData(content2);
+
+        Map diffData = createDiff(data1, data2, sortedData(data1, data2));
 
         switch (format) {
             case ("plain"):
@@ -45,7 +49,7 @@ public class Differ {
             return "ADD";
         } else if (!data2.containsKey(key)) {
             return "DEL";
-        } else if (hashCode(data2.get(key))  == hashCode(data1.get(key))) {
+        } else if (Objects.equals(data2.get(key), data1.get(key))) {
             return "   ";
         } else {
             return "CHV";
@@ -60,10 +64,5 @@ public class Differ {
             diff.put(p + key, sorted.get(key));
         }
         return diff;
-    }
-
-
-    public static int hashCode(Object o) {
-        return o != null ? o.hashCode() : 0;
     }
 }

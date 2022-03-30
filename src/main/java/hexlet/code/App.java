@@ -23,7 +23,7 @@ public final class App implements Callable {
     @Override
     public String call() throws Exception {
 
-        String data = Differ.generate(filepath1, filepath2);
+        String data = Differ.generate(filepath1, filepath2, format);
 
         System.out.println(data);
         return "0";
@@ -33,12 +33,4 @@ public final class App implements Callable {
         new CommandLine(new App()).execute(args);
     }
 
-    public static String getFormat() {
-        return format;
-    }
-
-    ////for test different format
-    //public static void setFormat(String formatVal) {
-    //    format = formatVal;
-    //}
 }
