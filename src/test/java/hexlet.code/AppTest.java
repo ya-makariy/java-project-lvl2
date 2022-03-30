@@ -225,9 +225,18 @@ class AppTest {
         String dataResult = Differ.generate(filepath1, filepath2, format);
         assertThat(dataResult).isEqualTo(EXPECTEDJSONLONG);
     }
+
+    @Test
+    void testDifferGenerateYAMLWithoutFormat() throws Exception {
+        filepath1 = RESOURCESPATH + "yaml/longyaml1.yml";
+        filepath2 = RESOURCESPATH + "yaml/longyaml2.yml";
+        String dataResult = Differ.generate(filepath1, filepath2);
+        assertThat(dataResult).isEqualTo(EXPECTEDSTYLISHLONG);
+    }
+
 //Тест на ошибку
     @Test
-    void testDifferGenerateWrongformatException() {
+    void testDifferGenerateWrongFormatException() {
         format = "wrong";
         filepath1 = RESOURCESPATH + "json/file1.json";
         filepath2 = RESOURCESPATH + "json/file2.json";
