@@ -1,5 +1,8 @@
 package hexlet.code;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,11 +27,11 @@ public class Differ {
     }
 
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
-        String content1 = Parser.getString(filepath1);
-        String content2 = Parser.getString(filepath2);
+        String content1 = getString(filepath1);
+        String content2 = getString(filepath2);
 
-        Map data1 = Parser.getData(content1);
-        Map data2 = Parser.getData(content2);
+        Map data1 = Parser.getData(content1, getContentType(filepath1));
+        Map data2 = Parser.getData(content2, getContentType(filepath1));
 
         Map diffData = createDiff(data1, data2, sortedData(data1, data2));
 
@@ -64,5 +67,19 @@ public class Differ {
             diff.put(p + key, sorted.get(key));
         }
         return diff;
+    }
+
+    public static String getString(String filepath) throws IOException {
+        return Files.readString(Path.of(filepath));
+    }
+
+    public static String getContentType(String filepath) {
+        if (filepath.endsWith(".json")) {
+            return "JSON";
+        } else if (filepath.endsWith(".yml") || filepath.endsWith(".yaml")) {
+            return "YAML";
+        } else {
+            throw new IllegalArgumentException("Don't know this extension!");
+        }
     }
 }

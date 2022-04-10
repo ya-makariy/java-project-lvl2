@@ -247,23 +247,22 @@ class AppTest {
     }
 
     @Test
-    void testParserGetDataWrongDataFormatException() {
-        String content = "wrong-Content-da\nta+format";
-        Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
-            Map data = Parser.getData(content);
-        });
-        assertThat(thrown.getMessage()).isEqualTo("ERROR: Don't know this data format!");
-    }
-
-    @Test
-    void  testGetDataByTypeWrongTypeDataFormatException() throws IOException {
+    void  testGetDataWrongTypeDataFormatException() throws IOException {
         filepath1 = RESOURCESPATH + "json/file1.json";
-        String content = Parser.getString(filepath1);
+        String content = Differ.getString(filepath1);
         String type = "WRONG";
         Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
-            Map data = Parser.getDataByType(content, type);
+            Map data = Parser.getData(content, type);
         });
         assertThat(thrown.getMessage()).isEqualTo("ERROR: Don't know 'WRONG' data format!");
     }
 
+    @Test
+    void testGetContentTypeWrongFileExtensionException() {
+        filepath1 = RESOURCESPATH + "json/file1.wrong";
+        Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
+            String contentType = Differ.getContentType(filepath1);
+        });
+        assertThat(thrown.getMessage()).isEqualTo("Don't know this extension!");
+    }
 }
