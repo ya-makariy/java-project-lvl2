@@ -78,17 +78,29 @@ class AppTest {
             Property 'setting1' was updated. From 'Some value' to 'Another value'
             Property 'setting2' was updated. From 200 to 300
             Property 'setting3' was updated. From true to 'none'""";
-    private static final String EXPECTEDJSONSHORT = "{\"DEL: follow\":false,\"NOT_CH: host\":\"hexlet.io\","
-            + "\"DEL: proxy\":\"123.234.53.22\",\"CH_FROM: timeout\":50,\"CH_TO: timeout\":20,\"ADD: verbose\":true}";
-    private static final String EXPECTEDJSONLONG = "{\"NOT_CH: chars1\":[\"a\",\"b\",\"c\"],"
-        + "\"CH_FROM: chars2\":[\"d\",\"e\",\"f\"],\"CH_TO: chars2\":false,\"CH_FROM: checked\":false,"
-        + "\"CH_TO: checked\":true,\"CH_FROM: default\":null,\"CH_TO: default\":[\"value1\",\"value2\"],"
-        + "\"CH_FROM: id\":45,\"CH_TO: id\":null,\"DEL: key1\":\"value1\",\"ADD: key2\":\"value2\","
-        + "\"NOT_CH: numbers1\":[1,2,3,4],\"CH_FROM: numbers2\":[2,3,4,5],\"CH_TO: numbers2\":[22,33,44,55],"
-        + "\"DEL: numbers3\":[3,4,5],\"ADD: numbers4\":[4,5,6],"
-        + "\"ADD: obj1\":{\"nestedKey\":\"value\",\"isNested\":true},\"CH_FROM: setting1\":\"Some value\","
-        + "\"CH_TO: setting1\":\"Another value\",\"CH_FROM: setting2\":200,\"CH_TO: setting2\":300,"
-        + "\"CH_FROM: setting3\":true,\"CH_TO: setting3\":\"none\"}";
+    private static final String EXPECTEDJSONSHORT = "[{\"status\":\"DEL\",\"fieldName\":\"follow\",\"value1\":false,"
+            + "\"value2\":null},"
+            + "{\"status\":\"DNC\",\"fieldName\":\"host\",\"value1\":\"hexlet.io\",\"value2\":\"hexlet.io\"},"
+            + "{\"status\":\"DEL\",\"fieldName\":\"proxy\",\"value1\":\"123.234.53.22\",\"value2\":null},"
+            + "{\"status\":\"CHV\",\"fieldName\":\"timeout\",\"value1\":50,\"value2\":20},"
+            + "{\"status\":\"ADD\",\"fieldName\":\"verbose\",\"value1\":null,\"value2\":true}]";
+    private static final String EXPECTEDJSONLONG = "[{\"status\":\"DNC\",\"fieldName\":\"chars1\","
+            + "\"value1\":[\"a\",\"b\",\"c\"],\"value2\":[\"a\",\"b\",\"c\"]},"
+            + "{\"status\":\"CHV\",\"fieldName\":\"chars2\",\"value1\":[\"d\",\"e\",\"f\"],\"value2\":false},"
+            + "{\"status\":\"CHV\",\"fieldName\":\"checked\",\"value1\":false,\"value2\":true},"
+            + "{\"status\":\"CHV\",\"fieldName\":\"default\",\"value1\":null,\"value2\":[\"value1\",\"value2\"]},"
+            + "{\"status\":\"CHV\",\"fieldName\":\"id\",\"value1\":45,\"value2\":null},"
+            + "{\"status\":\"DEL\",\"fieldName\":\"key1\",\"value1\":\"value1\",\"value2\":null},"
+            + "{\"status\":\"ADD\",\"fieldName\":\"key2\",\"value1\":null,\"value2\":\"value2\"},"
+            + "{\"status\":\"DNC\",\"fieldName\":\"numbers1\",\"value1\":[1,2,3,4],\"value2\":[1,2,3,4]},"
+            + "{\"status\":\"CHV\",\"fieldName\":\"numbers2\",\"value1\":[2,3,4,5],\"value2\":[22,33,44,55]},"
+            + "{\"status\":\"DEL\",\"fieldName\":\"numbers3\",\"value1\":[3,4,5],\"value2\":null},"
+            + "{\"status\":\"ADD\",\"fieldName\":\"numbers4\",\"value1\":null,\"value2\":[4,5,6]},"
+            + "{\"status\":\"ADD\",\"fieldName\":\"obj1\",\"value1\":null,"
+            + "\"value2\":{\"nestedKey\":\"value\",\"isNested\":true}},"
+            + "{\"status\":\"CHV\",\"fieldName\":\"setting1\",\"value1\":\"Some value\",\"value2\":\"Another value\"},"
+            + "{\"status\":\"CHV\",\"fieldName\":\"setting2\",\"value1\":200,\"value2\":300},"
+            + "{\"status\":\"CHV\",\"fieldName\":\"setting3\",\"value1\":true,\"value2\":\"none\"}]";
 
     @BeforeAll
     static void setStreams() {

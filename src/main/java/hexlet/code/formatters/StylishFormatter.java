@@ -1,27 +1,21 @@
 package hexlet.code.formatters;
 
+import java.util.List;
 import java.util.Map;
-import static hexlet.code.Differ.KEYLENGTH;
 
 public class StylishFormatter {
-
-    public static String generateStylish(Map data1, Map data2, Map<String, Object> diff) {
+    public static String generateStylish(List<Map<String, Object>> diff) {
         StringBuilder output = new StringBuilder("{\n");
-        for (String key: diff.keySet()) {
-            String oKey = key.substring(KEYLENGTH);
-            switch (key.substring(0, KEYLENGTH)) {
-                case("DEL"):
-                    output.append(wasRemoved(oKey, data1.get(oKey)));
-                    break;
-                case("ADD"):
-                    output.append(wasAdded(oKey, data2.get(oKey)));
-                    break;
-                case ("CHV"):
-                    output.append(wasUpdated(oKey, data1.get(oKey), data2.get(oKey)));
-                    break;
-                default:
-                    output.append(unchanged(oKey, data1.get(oKey)));
-                    break;
+        for (Map<String, Object> statusMap: diff) {
+            switch ((String) statusMap.get("status")) {
+                case ("DEL") -> output.append(wasRemoved((String) statusMap.get("fieldName"),
+                        statusMap.get("value1")));
+                case ("ADD") -> output.append(wasAdded((String) statusMap.get("fieldName"),
+                        statusMap.get("value2")));
+                case ("CHV") -> output.append(wasUpdated((String) statusMap.get("fieldName"),
+                        statusMap.get("value1"), statusMap.get("value2")));
+                default -> output.append(unchanged((String) statusMap.get("fieldName"),
+                        statusMap.get("value1")));
             }
         }
         return output.append("}").toString();
