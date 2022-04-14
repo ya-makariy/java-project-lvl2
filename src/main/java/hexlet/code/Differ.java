@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
-import java.util.TreeMap;
-import java.util.LinkedHashMap;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +26,8 @@ public class Differ {
         String content1 = getString(filepath1);
         String content2 = getString(filepath2);
 
-        Map data1 = Parser.getData(content1, getContentType(filepath1));
-        Map data2 = Parser.getData(content2, getContentType(filepath1));
+        Map<String, Object> data1 = Parser.getData(content1, getContentType(filepath1));
+        Map<String, Object> data2 = Parser.getData(content2, getContentType(filepath2));
 
         List<Map<String, Object>> diff = createDiff(data1, data2);
         return switch (format) {
@@ -37,28 +38,26 @@ public class Differ {
         };
     }
 
-    public static List<Map<String, Object>> createDiff(Map data1, Map data2) {
+    public static List<Map<String, Object>> createDiff(Map<String, Object> data1, Map<String, Object> data2) {
         List<Map<String, Object>> diff = new LinkedList<>();
-        Map<String, Object> sorted = sortedData(data1, data2);
-        for (String key: sorted.keySet()) {
-            Map<String, Object> statusMap = new LinkedHashMap<>();
-            statusMap.put("status", chnDetector(key, data1, data2));
-            statusMap.put("fieldName", key);
-            statusMap.put("value1", data1.get(key));
-            statusMap.put("value2", data2.get(key));
-            diff.add(statusMap);
+        for (String key: sortKeys(data1, data2)) {
+            Map<String, Object> node = new HashMap<>();
+            node.put("status", determineStatus(key, data1, data2));
+            node.put("fieldName", key);
+            node.put("value1", data1.get(key));
+            node.put("value2", data2.get(key));
+            diff.add(node);
         }
         return diff;
     }
 
-    public static LinkedHashMap sortedData(Map data1, Map data2) {
-        Map fullData = new TreeMap<>();
-        fullData.putAll(data1);
-        fullData.putAll(data2);
-        return new LinkedHashMap(fullData);
+    public static Set<String> sortKeys(Map<String, Object> data1, Map<String, Object> data2) {
+        Set<String> sortedKeys = new TreeSet<>(data1.keySet());
+        sortedKeys.addAll(data2.keySet());
+        return sortedKeys;
     }
 
-    public static String chnDetector(String key, Map data1, Map data2) {
+    private static String determineStatus(String key, Map<String, Object> data1, Map<String, Object> data2) {
         if (!data1.containsKey(key)) {
             return "ADD";
         } else if (!data2.containsKey(key)) {

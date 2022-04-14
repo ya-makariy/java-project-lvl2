@@ -24,28 +24,26 @@ public class PlainFormatter {
     }
 
     public static String wasAdded(String key, Object value) {
-        return String.format("Property '%s' was added with value: %s\n", key, objCheck(value));
+        return String.format("Property '%s' was added with value: %s\n", key, stringify(value));
     }
 
     public static String wasUpdated(String key, Object oldValue, Object newValue) {
-        return String.format("Property '%s' was updated. From %s to %s\n", key, objCheck(oldValue), objCheck(newValue));
+        return String.format("Property '%s' was updated. From %s to %s\n", key,
+                stringify(oldValue), stringify(newValue));
     }
 
     public static String unchanged() {
         return "";
     }
 
-    public static Object objCheck(Object o) {
+    public static Object stringify(Object o) {
         if (o == null) {
             return o;
         }
-        String className = o.getClass().toString();
-        if (className.contains("java.lang.")) {
-            if (className.contains("String")) {
-                return String.format("'%s'", o);
-            } else {
-                return o;
-            }
+        if (o instanceof String) {
+            return String.format("'%s'", o);
+        } else if ((o instanceof Number) || (o instanceof Boolean)) {
+            return o;
         }
         return "[complex value]";
     }
